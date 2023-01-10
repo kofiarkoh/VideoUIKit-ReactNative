@@ -353,6 +353,7 @@ export interface CallbacksInterface {
     IRtcEngineEventHandler['onJoinChannelSuccess']
   >;
   BecomeAudience(): void;
+  RtcStats(stats: any): void;
 }
 
 export type CustomCallbacksInterface = CallbacksInterface;

@@ -44,11 +44,11 @@ const Create: React.FC<{
             areaCode: AreaCode.AreaCodeGlob ^ AreaCode.AreaCodeCn,
           });
           // eslint-disable-next-line quotes, prettier/prettier
-          engine.current.setParameters("{\"rtc.using_ui_kit\": 1}");
+          engine.current.setParameters('{"rtc.using_ui_kit": 1}');
         } else {
           engine.current.initialize({appId: rtcProps.appId});
           // eslint-disable-next-line quotes, prettier/prettier
-          engine.current.setParameters("{\"rtc.using_ui_kit\": 1}");
+          engine.current.setParameters('{"rtc.using_ui_kit": 1}');
         }
         /* Live Streaming */
         if (
@@ -133,6 +133,12 @@ const Create: React.FC<{
           },
         );
 
+        engine.current.addListener('onRtcStats', async (connection, stats) => {
+          dispatch({
+            type: 'RtcStats',
+            value: [stats],
+          });
+        });
         engine.current.addListener('onLeaveChannel', async () => {
           console.log('leave rtc channel');
           setRtcChannelJoined(false);
@@ -208,6 +214,7 @@ const Create: React.FC<{
         engine.current.removeAllListeners('onTokenPrivilegeWillExpire');
         engine.current.removeAllListeners('onRemoteAudioStateChanged');
         engine.current.removeAllListeners('onError');
+        engine.current.removeAllListeners('onRtcStats');
         engine.current.release();
       } catch (e) {
         console.log('release error', e);
