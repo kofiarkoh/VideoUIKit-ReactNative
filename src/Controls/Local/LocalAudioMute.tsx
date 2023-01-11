@@ -32,7 +32,6 @@ const LocalAudioMute: React.FC<LocalAudioMuteProps> = (props) => {
         ...(variant === 'Outlined'
           ? (muteLocalAudio as object)
           : (muteRemoteAudio as object)),
-        ...{backgroundColor: '#B79797', borderWidth: 0},
       }}
       onPress={() => muteAudio(localUser, dispatch, RtcEngine)}
     />

@@ -14,13 +14,8 @@ const SwitchCamera: React.FC = () => {
   return (
     <BtnTemplate
       name={'switchCamera'}
-      style={{
-        ...styles.localBtn,
-        ...(switchCamera as object),
-        ...{backgroundColor: '#B79797', borderWidth: 0},
-      }}
+      style={{...styles.localBtn, ...(switchCamera as object)}}
       btnText={'Switch'}
-      color="#fff"
       disabled={local.video === ToggleState.enabled ? false : true}
       onPress={() => {
         RtcEngine.switchCamera();

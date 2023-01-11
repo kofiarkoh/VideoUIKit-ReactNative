@@ -17,12 +17,16 @@ const Create: React.FC<{
   dispatch: DispatchType;
   rtcUidRef: React.MutableRefObject<number | undefined>;
   setRtcChannelJoined: React.Dispatch<React.SetStateAction<boolean>>;
-  children: (engine: React.MutableRefObject<IRtcEngine>) => React.ReactElement;
+  children: (
+    engine: React.MutableRefObject<IRtcEngine>,
+    joinState: any,
+  ) => React.ReactElement;
 }> = ({dispatch, rtcUidRef, setRtcChannelJoined, children}) => {
   const [ready, setReady] = useState(false);
   const {callbacks, rtcProps} = useContext(PropsContext);
   let engine = useRef<IRtcEngine>({} as IRtcEngine);
   const isVideoEnabledRef = useRef<boolean>(false);
+  const joinState = useRef<boolean>(false);
   const firstUpdate = useRef(true);
 
   useEffect(() => {
@@ -44,11 +48,11 @@ const Create: React.FC<{
             areaCode: AreaCode.AreaCodeGlob ^ AreaCode.AreaCodeCn,
           });
           // eslint-disable-next-line quotes, prettier/prettier
-          engine.current.setParameters('{"rtc.using_ui_kit": 1}');
+          engine.current.setParameters("{\"rtc.using_ui_kit\": 1}");
         } else {
           engine.current.initialize({appId: rtcProps.appId});
           // eslint-disable-next-line quotes, prettier/prettier
-          engine.current.setParameters('{"rtc.using_ui_kit": 1}');
+          engine.current.setParameters("{\"rtc.using_ui_kit\": 1}");
         }
         /* Live Streaming */
         if (
@@ -133,12 +137,6 @@ const Create: React.FC<{
           },
         );
 
-        engine.current.addListener('onRtcStats', async (connection, stats) => {
-          dispatch({
-            type: 'RtcStats',
-            value: [stats],
-          });
-        });
         engine.current.addListener('onLeaveChannel', async () => {
           console.log('leave rtc channel');
           setRtcChannelJoined(false);
@@ -204,6 +202,7 @@ const Create: React.FC<{
       }
     }
     init();
+    const temp = joinState.current;
     return () => {
       try {
         engine.current.removeAllListeners('onJoinChannelSuccess');
@@ -214,8 +213,9 @@ const Create: React.FC<{
         engine.current.removeAllListeners('onTokenPrivilegeWillExpire');
         engine.current.removeAllListeners('onRemoteAudioStateChanged');
         engine.current.removeAllListeners('onError');
-        engine.current.removeAllListeners('onRtcStats');
-        engine.current.release();
+        if (temp) {
+          engine.current.release();
+        }
       } catch (e) {
         console.log('release error', e);
       }
@@ -314,7 +314,7 @@ const Create: React.FC<{
     <>
       {
         // Render children once RTCEngine has been initialized
-        ready && engine ? children(engine) : <></>
+        ready && engine ? children(engine, joinState) : <></>
       }
     </>
   );

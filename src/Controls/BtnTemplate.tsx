@@ -45,14 +45,7 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
 
   return (
     <TouchableOpacity
-      style={[
-        styleProps?.BtnTemplateContainer,
-        {
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 5,
-        },
-      ]}
+      style={styleProps?.BtnTemplateContainer}
       disabled={disabled}
       onPress={props.onPress}>
       <View

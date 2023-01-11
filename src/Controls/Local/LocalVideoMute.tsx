@@ -33,7 +33,6 @@ const LocalVideoMute: React.FC<LocalVideoMuteProps> = (props) => {
         ...(variant === 'Outlined'
           ? (muteLocalVideo as object)
           : (muteRemoteVideo as object)),
-        ...{backgroundColor: '#B79797', borderWidth: 0},
       }}
       onPress={() => muteVideo(local, dispatch, RtcEngine)}
     />
