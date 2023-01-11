@@ -24,7 +24,11 @@ const Controls: React.FC<ControlsPropsInterface> = (props) => {
         style={{
           ...styles.Controls,
           ...(localBtnContainer as object),
-          ...{flexDirection: 'column', height: 250},
+          ...{
+            flexDirection: 'column',
+            height:
+              rtcProps.role === ClientRoleType.ClientRoleAudience ? 100 : 250,
+          },
         }}>
         <View
           style={{
