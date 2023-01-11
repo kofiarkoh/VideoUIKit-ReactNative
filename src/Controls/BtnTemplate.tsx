@@ -8,6 +8,7 @@ import {
   Text,
   View,
   Platform,
+  Alert,
 } from 'react-native';
 import PropsContext, {IconsInterface} from '../Contexts/PropsContext';
 import styles from '../Style';
@@ -45,9 +46,12 @@ const BtnTemplate: React.FC<BtnTemplateInterface> = (props) => {
 
   return (
     <TouchableOpacity
-      style={styleProps?.BtnTemplateContainer}
+      style={[
+        styleProps?.BtnTemplateContainer,
+        {justifyContent: 'center', alignItems: 'center'},
+      ]}
       disabled={disabled}
-      onPress={props.onPress}>
+      onPress={() => Alert.alert('dsd')}>
       <View
         style={[
           {...styles.controlBtn, ...(BtnTemplateStyles as object)},

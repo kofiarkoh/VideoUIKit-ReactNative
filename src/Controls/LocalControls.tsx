@@ -20,15 +20,43 @@ const Controls: React.FC<ControlsPropsInterface> = (props) => {
   const showButton = props.showButton !== undefined ? props.showButton : true;
   return (
     <>
-      <View style={{...styles.Controls, ...(localBtnContainer as object)}}>
-        {rtcProps.role !== ClientRoleType.ClientRoleAudience && (
-          <>
-            <LocalAudioMute />
-            <LocalVideoMute />
-            <SwitchCamera />
-          </>
-        )}
-        <EndCall />
+      <View
+        style={{
+          ...styles.Controls,
+          ...(localBtnContainer as object),
+          ...{flexDirection: 'column', height: 250},
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}>
+          <EndCall />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-evenly',
+          }}>
+          {rtcProps.role !== ClientRoleType.ClientRoleAudience && (
+            <>
+              <LocalAudioMute />
+            </>
+          )}
+          {rtcProps.role !== ClientRoleType.ClientRoleAudience && (
+            <>
+              <LocalVideoMute />
+            </>
+          )}
+          {rtcProps.role !== ClientRoleType.ClientRoleAudience && (
+            <>
+              <SwitchCamera />
+            </>
+          )}
+        </View>
       </View>
       {showButton ? (
         <MaxUidConsumer>
