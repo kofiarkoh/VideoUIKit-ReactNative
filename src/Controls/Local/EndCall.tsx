@@ -30,11 +30,10 @@ const EndCall: React.FC = () => {
         },
       }}
       onPress={() => {
-        Alert.alert('pr');
-        /* dispatch({
+        dispatch({
           type: 'EndCall',
           value: [],
-        }); */
+        });
       }}
     />
   );
