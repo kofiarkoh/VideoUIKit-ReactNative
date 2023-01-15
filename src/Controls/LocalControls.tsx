@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import styles from '../Style';
 import EndCall from './Local/EndCall';
 import LocalAudioMute from './Local/LocalAudioMute';
@@ -62,25 +62,41 @@ const Controls: React.FC<ControlsPropsInterface> = (props) => {
           )}
         </View>
       </View>
-      {showButton ? (
-        <MaxUidConsumer>
-          {(users) => (
-            <View
-              style={{
-                ...styles.Controls,
-                bottom: styles.Controls.bottom + 70,
-              }}>
-              {rtcProps.layout !== Layout.Grid && (
-                <RemoteControls user={users[0]} showRemoteSwap={false} />
-              )}
-            </View>
-          )}
-        </MaxUidConsumer>
+      {/* {showButton ? (
+        <View
+          style={{
+            //backgroundColor: 'red',
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+          }}>
+          <MaxUidConsumer>
+            {(users) => (
+              <View
+                style={{
+                  ...styles.Controls,
+                  bottom: styles.Controls.bottom + 70,
+                }}>
+                {rtcProps.layout !== Layout.Grid && (
+                  <RemoteControls user={users[0]} showRemoteSwap={false} />
+                )}
+              </View>
+            )}
+          </MaxUidConsumer>
+        </View>
       ) : (
         <></>
-      )}
+      )} */}
     </>
   );
 };
 
+const styls = StyleSheet.create({
+  maxUidContainer: {
+    ...Platform.select({
+      ios: {},
+      android: {},
+    }),
+  },
+});
 export default Controls;
