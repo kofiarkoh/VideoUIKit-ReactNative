@@ -3,13 +3,14 @@ import PropsContext from '../../Contexts/PropsContext';
 import RtcContext from '../../Contexts/RtcContext';
 import BtnTemplate from '../BtnTemplate';
 import styles from '../../Style';
+import {ClientRoleType} from 'react-native-agora';
 
 /**
  * React Component that renders the endcall button
  * @returns Renders the endcall button
  */
 const EndCall: React.FC = () => {
-  const {styleProps} = useContext(PropsContext);
+  const {styleProps, rtcProps} = useContext(PropsContext);
   const {localBtnStyles} = styleProps || {};
   const {endCall} = localBtnStyles || {};
   const {dispatch} = useContext(RtcContext);
@@ -17,7 +18,11 @@ const EndCall: React.FC = () => {
   return (
     <BtnTemplate
       name={'callEnd'}
-      btnText={'End Stream'}
+      btnText={
+        rtcProps.role === ClientRoleType.ClientRoleAudience
+          ? 'Stop Watching'
+          : 'End Stream'
+      }
       color="#FFF"
       style={{
         ...styles.endCall,
